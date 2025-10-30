@@ -18,5 +18,5 @@ export const clerk = clerkMiddleware(async (auth, req) => {
 export default clerk;
 
 export const config = {
-  matcher: ["/dashboard(.*)", "/collection(.*)", "/journal(.*)"],
+  matcher: ["/(.*)"],
 };
