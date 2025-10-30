@@ -4,6 +4,8 @@ import React from 'react'
 import Collections from './_components/collections'
 import MoodAnalytics from './_components/mood-analytics'
 
+export const dynamic = "force-dynamic";
+
 const dashboard = async () => {
   const collections = await getCollections()
   const entriesData = await getJournalEntries()
