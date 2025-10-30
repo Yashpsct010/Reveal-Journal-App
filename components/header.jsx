@@ -43,10 +43,10 @@ const Header = async () => {
                 <span className='hidden md:inline'>Write New</span>
               </Button>
               </Link>
-              <Link href='/dashboard/collection'>
+              <Link href='/dashboard#collections'>
               <Button variant="link" className="font-extrabold cursor-pointer flex items-center gap-2">
                 <Bookmark size={18}/>
-                <span className='hidden md:inline'>Collection</span>
+                <span className='hidden md:inline'>Collections</span>
               </Button>
               </Link>
               <UserMenu />
