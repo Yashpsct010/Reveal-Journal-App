@@ -72,7 +72,7 @@ export const getCollections = async () => {
   }
 };
 
-export const getCollection = async ({collectionId}) => {
+export const getCollection = async ({ collectionId }) => {
   try {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
@@ -92,10 +92,27 @@ export const getCollection = async ({collectionId}) => {
   }
 };
 
-export const deleteCollection = async ({collectionId}) => {
+export const deleteCollection = async ({ collectionId }) => {
   try {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
+    const req = await request();
+    const decision = await aj.protect(req, {
+      userId,
+      requested: 1,
+    });
+
+    if (decision.isDenied()) {
+      if (decision.reason.isRateLimit()) {
+        const { remaining, reset } = decision.reason;
+        console.error({
+          code: "RATE_LIMIT_EXCEEDED",
+          details: { remaining, resetInSeconds: reset },
+        });
+        throw new Error("Too many requests, please try again later.");
+      }
+      throw new Error("Request blocked by policy.");
+    }
 
     const user = await db.user.findUnique({
       where: { clerkId: userId },
@@ -105,11 +122,11 @@ export const deleteCollection = async ({collectionId}) => {
     const collection = await db.collection.findFirst({
       where: { id: collectionId, userId: user.id },
     });
-    if(!collection) throw new Error("Collection not Found")
-    
+    if (!collection) throw new Error("Collection not Found");
+
     await db.collection.delete({
       where: { id: collectionId },
-    })
+    });
     return true;
   } catch (error) {
     console.error("Error getting collections", error.message);
