@@ -97,7 +97,7 @@ const MoodAnalytics = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className='text-2xl font-bold'>{stats.averageScore}/10</p>
+                <p className='text-2xl font-bold'>{stats.averageScore ? stats.averageScore : 0}/10</p>
                 <p className='text-xs text-muted-foreground'>Overall mood score</p>
               </CardContent>
             </Card>
