@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Reveal",
   description: "A Journal App",
+  verification: {
+    google: "EP61Sh2IxjUEFgHT_jdFWEBtgukmT8UKDzwRvj9CB_k",
+  }
 };
 
 export default function RootLayout({ children }) {
